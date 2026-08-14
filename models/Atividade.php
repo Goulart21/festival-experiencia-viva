@@ -4,7 +4,7 @@
 class Atividade{
 
     private ?int $id_atividade;
-    private string $nome;
+    private string $nome_atividade;
     private ?string $descricao;
     private string $data_atividade;
     private string $hora_inicio;
@@ -14,7 +14,7 @@ class Atividade{
 
     public function __construct(
 
-    string $nome,
+    string $nome_atividade,
     ?string $descricao,
     string $data_atividade,
     string $hora_inicio,
@@ -26,7 +26,7 @@ class Atividade{
     )
     {
         $this->id_atividade = $id_atividade;
-        $this->nome = $nome;
+        $this->nome_atividade = $nome_atividade;
         $this->descricao = $descricao;
         $this->data_atividade = $data_atividade;
         $this->hora_inicio = $hora_inicio;
@@ -41,8 +41,8 @@ class Atividade{
         return $this->id_atividade;
     }
 
-    public function getNome(): string{
-        return $this->nome;
+    public function getNomeAtividade(): string{
+        return $this->nome_atividade;
     }
 
     public function getDescricao(): ?string{
