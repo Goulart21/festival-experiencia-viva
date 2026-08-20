@@ -15,7 +15,7 @@ class ParticipanteService{
 
     public function cadastrar(Participante $participante): bool{
 
-        $sql = "INSERT INTO participantes (nome,email,telefone)";
+        $sql = "INSERT INTO participantes (nome,email,telefone) VALUES (:nome, :email, :telefone)";
         
         $stmt = $this->pdo->prepare($sql);
 
@@ -49,6 +49,39 @@ class ParticipanteService{
 
         return $participante ?: null;
     }
+
+    public function atualizar(
+    int $id_participante,
+    Participante $participante
+    ): bool {
+
+    $sql = "UPDATE participantes
+            SET nome = :nome,
+                email = :email,
+                telefone = :telefone
+            WHERE id_participante = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    return $stmt->execute([
+        ':nome' => $participante->getNome(),
+        ':email' => $participante->getEmail(),
+        ':telefone' => $participante->getTelefone(),
+        ':id' => $id_participante
+    ]);
+}
+
+    public function excluir(int $id_participante): bool
+{
+    $sql = "DELETE FROM participantes
+            WHERE id_participante = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    return $stmt->execute([
+        ':id' => $id_participante
+    ]);
+}
 }
 
 ?>
