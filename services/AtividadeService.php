@@ -25,7 +25,7 @@ class AtividadeService
         $stmt = $this->pdo->prepare($sql);
 
         return $stmt->execute([
-            ':nome' => $atividade->getNomeAtividade(),
+            ':nome_atividade' => $atividade->getNomeAtividade(),
             ':descricao' => $atividade->getDescricao(),
             ':data_atividade' => $atividade->getDataAtividade(),
             ':hora_inicio' => $atividade->getHoraInicio(),
@@ -70,14 +70,16 @@ class AtividadeService
         hora_fim = :hora_fim,
         local_atividade = :local_atividade,
         capacidade = :capacidade
-        WHERE id_capacidade = :id";
+        WHERE id_atividade = :id";
 
         $stmt = $this->pdo->prepare($sql);
+
+        
 
         return $stmt->execute([
             ':nome_atividade' => $atividade->getNomeAtividade(),
             ':descricao' => $atividade->getDescricao(),
-            ':data_atividade' => $atividade->getCapacidade(),
+            ':data_atividade' => $atividade->getDataAtividade(),
             ':hora_inicio' => $atividade->getHoraInicio(),
             ':hora_fim' => $atividade->getHoraFim(),
             ':local_atividade' => $atividade->getLocalAtividade(),
@@ -91,7 +93,7 @@ class AtividadeService
 
         $sql = "SELECT COUNT(*)
         FROM inscricoes
-        WHERE id_atividade = id";
+        WHERE id_atividade = :id";
 
         $stmt = $this->pdo->prepare($sql);
 
@@ -106,7 +108,7 @@ class AtividadeService
         }
 
         $sql = "DELETE FROM atividades
-                WHERE $id_atividade = :id";
+                WHERE id_atividade = :id";
         
         $stmt = $this->pdo->prepare($sql);
 

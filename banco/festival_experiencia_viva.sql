@@ -1,6 +1,7 @@
 
 create database festival_experiencia_viva;
 
+use festival_experiencia_viva;
 create table participantes(
 	
     id_participante int auto_increment primary key,
@@ -13,7 +14,7 @@ create table participantes(
 create table atividades(
 	
     id_atividade int auto_increment primary key,
-    nome varchar(150) not null,
+    nome_atividade varchar(150) not null,
     descricao text,
     data_atividade date not null,
     hora_inicio time not null,
@@ -22,7 +23,9 @@ create table atividades(
     capacidade int not null
 );
 
-create table incricoes(
+alter table atividades rename column nome to nome_atividade;
+
+create table inscricoes(
 	
     id_inscricao int auto_increment primary key,
     id_participante int not null,
@@ -42,3 +45,18 @@ create table incricoes(
     constraint uk_participante_atividade
     unique (id_participante, id_atividade)
 );
+
+select * from participantes;
+select * from atividades;
+
+SELECT id_atividade, nome_atividade, capacidade
+FROM atividades
+ORDER BY id_atividade;
+
+SELECT id_participante, nome
+FROM participantes;
+
+SELECT id_atividade, nome_atividade, capacidade
+FROM atividades;
+
+rename table incricoes to inscricoes;
