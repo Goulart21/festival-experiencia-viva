@@ -16,10 +16,10 @@ verificar ser o usuario foi cadastrado ou não
 */
 $service = new ParticipanteService($pdo);
 
-/* 
+
 $participante = new Participante(
-    'Pedro Goulart',
-    'pedro@gmail.com',
+    'Teste Cancelar',
+    'prets@w.com',
     '3199999999'
 );
 
@@ -29,7 +29,7 @@ if($service->cadastrar($participante)){
 else{
     echo "Erro no cadastro";
 }
-    */
+    
 
 //Buscar por ID
 $participantes = $service->listar();

@@ -53,8 +53,11 @@ if($service->atualizarAtividade(1,$atividadeAtualizada)){
     echo "Atividadte atualizada";
 }
 
-if($service->excluir(2)){
+if($service->excluir(3)){
     echo "Atividade excluida";
+}
+else{
+    echo "Erro";
 }
 
 

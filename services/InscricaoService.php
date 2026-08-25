@@ -14,10 +14,10 @@ class InscricaoService
         $this->pdo = $pdo;
     }
 
-    // Realizar inscrição
     public function cadastrarInscricao(Inscricao $inscricao): bool
     {
-        // Verifica se o participante já está inscrito
+
+    
         $sql = "SELECT COUNT(*)
                 FROM inscricoes
                 WHERE id_participante = :id_participante
@@ -35,7 +35,7 @@ class InscricaoService
             return false;
         }
 
-        // Verifica a capacidade da atividade
+
         $sql = "SELECT capacidade
                 FROM atividades
                 WHERE id_atividade = :id_atividade";
@@ -52,7 +52,7 @@ class InscricaoService
             return false;
         }
 
-        // Conta inscrições ativas
+  
         $sql = "SELECT COUNT(*)
                 FROM inscricoes
                 WHERE id_atividade = :id_atividade
@@ -66,7 +66,7 @@ class InscricaoService
 
         $quantidadeInscritos = $stmt->fetchColumn();
 
-        // Verifica se existem vagas
+
         if ($quantidadeInscritos >= $capacidade) {
             return false;
         }
@@ -86,7 +86,6 @@ class InscricaoService
     }
 
 
-    // Listar inscrições
     public function listarInscricoes(): array
     {
         $sql = "SELECT * FROM inscricoes
@@ -98,7 +97,7 @@ class InscricaoService
     }
 
 
-    // Buscar inscrição por ID
+
     public function buscarInscricaoPorId(int $id_inscricao): ?array
     {
         $sql = "SELECT *
@@ -117,7 +116,6 @@ class InscricaoService
     }
 
 
-    // Listar participantes de uma atividade
     public function listarPorAtividade(int $id_atividade): array
     {
         $sql = "SELECT p.*
@@ -138,7 +136,6 @@ class InscricaoService
     }
 
 
-    // Cancelar inscrição
     public function cancelarInscricao(int $id_inscricao): bool
     {
         $sql = "UPDATE inscricoes

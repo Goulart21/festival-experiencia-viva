@@ -9,7 +9,7 @@ $service = new InscricaoService($pdo);
 
 
 
-
+/*
 
 $inscricao = new Inscricao(
     4, 
@@ -22,6 +22,7 @@ if ($service->cadastrarInscricao($inscricao)) {
     echo "Não foi possível realizar a inscrição";
 }
 
+*/
 
 
 
@@ -48,7 +49,7 @@ echo "</pre>";
 
 
 
-
+/*
 $inscricaoDuplicada = new Inscricao(
     4,
     1
@@ -59,14 +60,45 @@ if ($service->cadastrarInscricao($inscricaoDuplicada)) {
 } else {
     echo "Inscrição duplicada foi impedida";
 }
+*/
 
 
 
-
-if ($service->cancelarInscricao(1)) {
+if ($service->cancelarInscricao(10)) {
     echo "Inscrição cancelada com sucesso";
 } else {
     echo "Erro";
+}
+
+
+
+
+$idAtividade = 3;
+
+
+$idInscricao = 41;
+
+
+$idOutroParticipante = 9;
+
+
+// 1. Cancela a inscrição existente
+if ($service->cancelarInscricao($idInscricao)) {
+    echo "Inscrição cancelada com sucesso";
+} else {
+    echo "Não foi possível cancelar a inscrição";
+}
+
+
+$novaInscricao = new Inscricao(
+    $idOutroParticipante,
+    $idAtividade
+);
+
+if ($service->cadastrarInscricao($novaInscricao)) {
+    echo "Nova inscrição realizada. A vaga foi liberada corretamente.<br>";
+} else {
+    echo "ERRO";
 }
 
 
