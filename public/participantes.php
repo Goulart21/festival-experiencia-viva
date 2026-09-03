@@ -107,7 +107,7 @@ if (isset($_GET['atualizar'])) {
 
                     <form action="" method="post" class="formCadastro">
 
-                        <?php if($participanteEditar): ?>>
+                        <?php if($participanteEditar): ?>
                             <input type="hidden" name="id_participante" value="<?= $participanteEditar['id_participante'] ?>">
                         <?php endif;?>
                         <div class="mb-3">
@@ -178,7 +178,7 @@ if (isset($_GET['atualizar'])) {
 
     <footer>Festival Experiência Viva</footer>
 
-    <script src="js/scipt.js"></script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>
