@@ -176,7 +176,7 @@ if (isset($_GET['atualizar'])) {
     </main>
 
 
-    <footer>Festival Experiência</footer>
+    <footer>Festival Experiência Viva</footer>
 
     <script src="js/scipt.js"></script>
 </body>
