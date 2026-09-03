@@ -112,17 +112,17 @@ if (isset($_GET['atualizar'])) {
                         <?php endif;?>
                         <div class="mb-3">
                             <label for="nome" class="form-label">Nome:</label>
-                            <input type="text" class="form-control" id="nome" name="nome" value="<?= htmlspecialchars($participanteEditar['nome'] ?? '')  ?>" required>
+                            <input type="text" class="form-control" id="nome" name="nome" placeholder="Ex: Maria" value="<?= htmlspecialchars($participanteEditar['nome'] ?? '')  ?>" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Email:</label>
-                            <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($participanteEditar['email'] ?? '')   ?>" required>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Ex: maria@gmail.com" value="<?= htmlspecialchars($participanteEditar['email'] ?? '')   ?>" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="telefone" class="form-label">Telefone:</label>
-                            <input type="tel" class="form-control" id="telefone" name="telefone" value="<?=htmlspecialchars($participanteEditar['telefone'] ?? '') ?>" required>
+                            <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="Ex: (31)99999999" value="<?=htmlspecialchars($participanteEditar['telefone'] ?? '') ?>" required>
                         </div>
 
                         <div class="text-center">
