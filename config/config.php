@@ -23,7 +23,7 @@ try {
         PDO::FETCH_ASSOC
     );
 
-    echo"cdasd";
+   
 
 } catch (PDOException $e) {
 

@@ -1,0 +1,20 @@
+
+
+
+footer{
+
+    background-color: black;
+    color: white;
+    text-align: center;
+    height: 100px;
+    padding: 20px;
+    margin-top: 20%;
+}
+
+.formCadastro{
+    background-color: rgb(67, 67, 67);
+    color: white;
+    border-radius: 5px;
+    padding: 25px;
+}
+
