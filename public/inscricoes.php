@@ -1,6 +1,49 @@
 <?php
 
-require_once __DIR__ . '/../config/config.php'
+
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../models/Atividade.php';
+require_once __DIR__ . '/../models/Participantes.php';
+require_once __DIR__ . '/../models/Inscricao.php';
+
+require_once __DIR__ . '/../services/AtividadeService.php';
+require_once __DIR__ . '/../services/InscricaoService.php';
+require_once __DIR__ . '/../services/ParticipanteService.php';
+
+$participanteService = new ParticipanteService($pdo);
+$atividadeService = new AtividadeService($pdo);
+$inscricoesService = new InscricaoService($pdo);
+
+$participantes = $participanteService->listar();
+$atividades = $atividadeService->listarAtividade();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $id_participante = (int) $_POST['id_participante'];
+    $id_atividade = (int) $_POST['id_atividade'];
+
+    $inscricao = new Inscricao(
+        $id_participante,
+        $id_atividade
+    );
+
+    $inscricoesService->cadastrarInscricao($inscricao);
+
+    header('Location: inscricoes.php');
+    exit;
+}
+
+$inscricoes = $inscricoesService->listarInscricoes();
+
+if (isset($_GET['cancelar'])) {
+
+    $id_inscricao = (int) $_GET['cancelar'];
+
+    $inscricoesService->cancelarInscricao($id_inscricao);
+
+    header('Location: inscricoes.php');
+    exit;
+}
 
 
 ?>
@@ -69,7 +112,13 @@ require_once __DIR__ . '/../config/config.php'
                                     Selecione um participante
                                 </option>
 
-                                <!-- PHP vai gerar os participantes aq-->
+                                <?php foreach ($participantes as $participante): ?>
+
+                                    <option value="<?= $participante['id_participante'] ?>">
+                                        <?= htmlspecialchars($participante['nome']) ?>
+                                    </option>
+
+                                    <?php endforeach; ?>
                             </select>
                         </div>
 
@@ -80,6 +129,14 @@ require_once __DIR__ . '/../config/config.php'
                                 <option value="">
                                     Selecione uma Atividade
                                 </option>
+
+                                <?php foreach ($atividades as $atividade): ?>
+
+                                    <option value="<?= $atividade['id_atividade'] ?>">
+                                        <?= htmlspecialchars($atividade['nome_atividade']) ?>
+                                    </option>
+
+                                    <?php endforeach;?>
 
                             </select>
                         </div>
@@ -111,16 +168,38 @@ require_once __DIR__ . '/../config/config.php'
                     </thead>
 
                     <tbody>
-                        <!-- PHP vai gerar as inscrições aqui -->
+                        
+                    <?php foreach ($inscricoes as $inscricao):?>
+                    <tr>
+                        <td><?= htmlspecialchars($inscricao['nome_participante']) ?></td>
+                        <td><?= htmlspecialchars($inscricao['nome_atividade']) ?></td>
+                        <td><?= $inscricao['data_inscricao'] ?></td>
+                        <td><?= $inscricao['status'] ?></td>
+
+                        <td>
+
+                        <?php if($inscricao['status'] === 'ATIVA'): ?>
+
+                            <a href="inscricoes.php?cancelar=<?= $inscricao['id_inscricao'] ?>"
+                            class="btn btn-danger" onclick="return confirm('Deseja realmente cancelar está inscrição')">Cancelar</a>
+
+                            <?php else:?>
+                                <span class="text-muted">Cancelada</span>
+                        </td>
+
+                        <?php endif;?>
+                    </tr>
                     </tbody>
+
+                    <?php endforeach;?>
                 </table>
             </div>
         </section>
-    </main> 
+    </main>
 
-<footer>
-    Festival Experiência Viva
-</footer>
+    <footer>
+        Festival Experiência Viva
+    </footer>
 
     <script src="js/script.js"></script>
 </body>
