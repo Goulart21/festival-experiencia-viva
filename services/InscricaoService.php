@@ -17,7 +17,7 @@ class InscricaoService
     public function cadastrarInscricao(Inscricao $inscricao): bool
     {
 
-    
+
         $sql = "SELECT COUNT(*)
                 FROM inscricoes
                 WHERE id_participante = :id_participante
@@ -52,7 +52,7 @@ class InscricaoService
             return false;
         }
 
-  
+
         $sql = "SELECT COUNT(*)
                 FROM inscricoes
                 WHERE id_atividade = :id_atividade
@@ -88,8 +88,18 @@ class InscricaoService
 
     public function listarInscricoes(): array
     {
-        $sql = "SELECT * FROM inscricoes
-                ORDER BY data_inscricao DESC";
+        $sql = "SELECT 
+                i.id_inscricao,
+                p.nome AS nome_participante,
+                a.nome_atividade,
+                i.data_inscricao,
+                i.status
+                FROM  inscricoes i
+                INNER JOIN  participantes p
+                ON i.id_participante = p.id_participante
+                INNER JOIN atividades a
+                ON i.id_atividade = a.id_atividade
+                ORDER BY i.data_inscricao DESC";
 
         $stmt = $this->pdo->query($sql);
 
