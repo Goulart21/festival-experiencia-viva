@@ -21,23 +21,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['id_atividade'])) {
 
         $id = (int) $_POST['id_atividade'];
-        $service->atualizarAtividade($id, $atividade);
+        $resultado = $service->atualizarAtividade($id, $atividade);
+        header('Location: atividades.php?mensagem=' . $resultado);
     } else {
-        $service->cadastrarAtividade($atividade);
-    }
 
-    header('Location: atividades.php');
-    exit;
+        $resultado = $service->cadastrarAtividade($atividade);
+
+        header('Location: atividades.php?mensagem=' . $resultado);
+        exit;
+    }
 }
 
 $atividades = $service->listarAtividade();
 
 if (isset($_GET['excluir'])) {
+    $id = (int) $_GET['excluir'];
 
-    $id_atividade = $_GET['excluir'];
-    $service->excluir($id_atividade);
+    $resultado = $service->excluir($id);
 
-    header('Location: atividades.php');
+    header('Location: atividades.php?mensagem=' . $resultado);
     exit;
 }
 
@@ -102,6 +104,55 @@ if (isset($_GET['atualizarAtividade'])) {
 
     <main>
 
+        <?php if (isset($_GET['mensagem'])): ?>
+
+            <?php if ($_GET['mensagem'] === 'SUCESSO'): ?>
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Atividade cadastrada com sucesso!
+
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Fechar"></button>
+                </div>
+
+            <?php elseif ($_GET['mensagem'] === 'ATUALIZADO'): ?>
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Atividade atualizada com sucesso!
+
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Fechar"></button>
+                </div>
+
+            <?php elseif ($_GET['mensagem'] === 'EXCLUIDO'): ?>
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Atividade excluída com sucesso!
+
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Fechar"></button>
+                </div>
+
+            <?php elseif ($_GET['mensagem'] === 'POSSUI_INSCRICOES'): ?>
+
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    Não é possível excluir esta atividade, pois existem participantes inscritos.
+
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Fechar"></button>
+                </div>
+
+            <?php endif; ?>
+
+        <?php endif; ?>
         <section class="mt-4 mb-5">
             <h2 class="text-center mb-4">Cadastro de Atividade</h2>
 
@@ -110,50 +161,50 @@ if (isset($_GET['atualizarAtividade'])) {
 
                     <form action="" method="post">
 
-                        <?php if($atividadeEditar): ?>
+                        <?php if ($atividadeEditar): ?>
                             <input type="hidden" name="id_atividade" value="<?= $atividadeEditar['id_atividade'] ?>">
-                        <?php endif;?>
+                        <?php endif; ?>
                         <div class="mb-3">
                             <label for="nome_atividade" class="form-label">Nome da Atividade</label>
-                            <input type="text" name="nome_atividade" id="nome_atividade" class="form-control"  value="<?= htmlspecialchars($atividadeEditar['nome_atividade'] ?? '') ?>"
-                        </div>
+                            <input type="text" name="nome_atividade" id="nome_atividade" class="form-control" value="<?= htmlspecialchars($atividadeEditar['nome_atividade'] ?? '') ?>"
+                                </div>
 
-                        <div class="mb-3">
+                            <div class="mb-3">
 
-                            <label for="descricao" class="form-label">Descrição:</label>
-                            <input type="text" class="form-control" id="descricao" name="descricao" value="<?= htmlspecialchars($atividadeEditar['descricao'] ?? '') ?>" required>
-                        </div>
+                                <label for="descricao" class="form-label">Descrição:</label>
+                                <input type="text" class="form-control" id="descricao" name="descricao" value="<?= htmlspecialchars($atividadeEditar['descricao'] ?? '') ?>" required>
+                            </div>
 
-                        <div class="mb-3">
-                            <label for="data_atividade" class="form-label">Data Atividade:</label>
-                            <input type="date" class="form-control" id="data_atividade" name="data_atividade" value="<?= $atividadeEditar['data_atividade']?? '' ?>" required>
-                        </div>
+                            <div class="mb-3">
+                                <label for="data_atividade" class="form-label">Data Atividade:</label>
+                                <input type="date" class="form-control" id="data_atividade" name="data_atividade" value="<?= $atividadeEditar['data_atividade'] ?? '' ?>" required>
+                            </div>
 
-                        <div class="mb-3">
-                            <label for="hora_inicio" class="form-label">Hora de inicio: </label>
-                            <input type="time" class="form-control" id="hora_inicio" name="hora_inicio" value="<?= $atividadeEditar['hora_inicio'] ?? '' ?>" required>
-                        </div>
+                            <div class="mb-3">
+                                <label for="hora_inicio" class="form-label">Hora de inicio: </label>
+                                <input type="time" class="form-control" id="hora_inicio" name="hora_inicio" value="<?= $atividadeEditar['hora_inicio'] ?? '' ?>" required>
+                            </div>
 
-                        <div class="mb-3">
-                            <label for="hora_fim">Hora de término:</label>
-                            <input type="time" class="form-control" id="hora_fim" name="hora_fim" value="<?= $atividadeEditar['hora_fim'] ?? '' ?>" required>
-                        </div>
+                            <div class="mb-3">
+                                <label for="hora_fim">Hora de término:</label>
+                                <input type="time" class="form-control" id="hora_fim" name="hora_fim" value="<?= $atividadeEditar['hora_fim'] ?? '' ?>" required>
+                            </div>
 
-                        <div class="mb-3">
-                            <label for="local_atividade">Local:</label>
-                            <input type="text" class="form-control" id="local_atividade" name="local_atividade" value="<?= $atividadeEditar['local_atividade'] ?? ''?>" required>
-                        </div>
+                            <div class="mb-3">
+                                <label for="local_atividade">Local:</label>
+                                <input type="text" class="form-control" id="local_atividade" name="local_atividade" value="<?= $atividadeEditar['local_atividade'] ?? '' ?>" required>
+                            </div>
 
-                        <div class="mb-3">
-                            <label for="capacidade" class="form-label">Capacidade:</label>
-                            <input type="number" class="form-control" id="capacidade" name="capacidade" min=1 value="<?= $atividadeEditar['capacidade'] ?? '' ?>" required>
-                        </div>
+                            <div class="mb-3">
+                                <label for="capacidade" class="form-label">Capacidade:</label>
+                                <input type="number" class="form-control" id="capacidade" name="capacidade" min=1 value="<?= $atividadeEditar['capacidade'] ?? '' ?>" required>
+                            </div>
 
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-success">
-                                <?= $atividadeEditar ? 'Atualizar' : 'Cadastrar' ?>
-                            </button>
-                        </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success">
+                                    <?= $atividadeEditar ? 'Atualizar' : 'Cadastrar' ?>
+                                </button>
+                            </div>
                     </form>
                 </div>
             </div>
@@ -197,7 +248,7 @@ if (isset($_GET['atualizarAtividade'])) {
                                     <a href="atividades.php?excluir=<?= $atividade['id_atividade'] ?>" class="btn btn-danger">Excluir</a>
 
                                 </td>
-                        
+
                             </tr>
                         <?php endforeach ?>
                     </tbody>
@@ -207,7 +258,7 @@ if (isset($_GET['atualizarAtividade'])) {
     </main>
 
     <footer>Festival Experiência Viva</footer>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js"></script>
 
 </body>
