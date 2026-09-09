@@ -408,6 +408,9 @@ O desenvolvimento buscou aplicar conceitos de **desenvolvimento web, banco de da
 </p>
 
 <p align="center">
+  <a href="https://www.linkedin.com/in/pedrotgs/">
+  <img src="https://img.shields.io/badge/LinkedIn-Pedro%20Teodoro%20Goulart%20Santana-0A66C2?style=for-the-badge&logo=linkedin&logoColor=blue">
+</a>
   <a href="https://github.com/Goulart21">
     <img src="https://img.shields.io/badge/GitHub-Goulart21-181717?style=for-the-badge&logo=github">
   </a>
