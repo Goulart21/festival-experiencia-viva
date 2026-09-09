@@ -13,17 +13,34 @@ class ParticipanteService{
         $this->pdo = $pdo;
     }
 
-    public function cadastrar(Participante $participante): bool{
+    public function cadastrar(Participante $participante): string{
+
+    $sql = "SELECT COUNT(*)
+            FROM participantes
+            WHERE email = :email";
+
+            $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute([
+            ':email' => $participante->getEmail()
+        ]);
+
+        if($stmt->fetchColumn() > 0){
+            return 'EMAIL_DUPLICADO';
+        }
 
         $sql = "INSERT INTO participantes (nome,email,telefone) VALUES (:nome, :email, :telefone)";
         
         $stmt = $this->pdo->prepare($sql);
 
-        return $stmt->execute([
+        if ($stmt->execute([
             ':nome' => $participante->getNome(),
             ':email' => $participante->getEmail(),
             ':telefone' =>$participante->getTelefone()
-        ]);
+        ])) {
+            return 'SUCESSO';
+        }
+        return 'ERRO';
     }
 
     public function listar(): array{
