@@ -14,18 +14,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $participante = new Participante($nome, $email, $telefone);
 
-    if(isset($_POST['id_participante'])){
+    if (isset($_POST['id_participante'])) {
 
-    $id = (int) $_POST['id_participante'];
-    $service->atualizar($id, $participante);
-    }
-    else{
-        $service->cadastrar($participante);
-    }
-    header('Location: participantes.php');
-    exit;
+        $id = (int) $_POST['id_participante'];
+        $resultado = $service->atualizar($id, $participante);
 
-    
+        header('Location: participantes.php?mensagem=ATUALIZADO');
+        exit;
+    } else {
+        $resultado = $service->cadastrar($participante);
+
+        header('Location: participantes.php?mensagem=' . $resultado);
+        exit;
+    }
 }
 $participantes = $service->listar();
 
@@ -34,7 +35,7 @@ if (isset($_GET['excluir'])) {
     $id_participante = $_GET['excluir'];
     $service->excluir($id_participante);
 
-    header('Location: participantes.php');
+    header('Location: participantes.php?mensagem=EXCLUIDO');
     exit;
 }
 
@@ -99,6 +100,67 @@ if (isset($_GET['atualizar'])) {
     </header>
 
     <main>
+
+        <?php if (isset($_GET['mensagem'])): ?>
+
+            <?php if ($_GET['mensagem'] === 'SUCESSO'): ?>
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Participante cadastrado com sucesso!
+
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Fechar"></button>
+                </div>
+
+            <?php elseif ($_GET['mensagem'] === 'EMAIL_DUPLICADO'): ?>
+
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    Já existe um participante cadastrado com este e-mail.
+
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Fechar"></button>
+                </div>
+
+            <?php elseif ($_GET['mensagem'] === 'ATUALIZADO'): ?>
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Participante atualizado com sucesso!
+
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Fechar"></button>
+                </div>
+
+            <?php elseif ($_GET['mensagem'] === 'ERRO'): ?>
+
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    Ocorreu um erro ao cadastrar o participante.
+
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Fechar"></button>
+                </div>
+
+            <?php elseif ($_GET['mensagem'] === 'EXCLUIDO'): ?>
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Participante excluído com sucesso!
+
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Fechar"></button>
+                </div>
+
+            <?php endif; ?>
+
+        <?php endif; ?>
         <section class="mb-4 mt-4">
             <h2 class="text-center">Cadastro de Participantes</h2>
 
@@ -107,9 +169,9 @@ if (isset($_GET['atualizar'])) {
 
                     <form action="" method="post" class="formCadastro">
 
-                        <?php if($participanteEditar): ?>
+                        <?php if ($participanteEditar): ?>
                             <input type="hidden" name="id_participante" value="<?= $participanteEditar['id_participante'] ?>">
-                        <?php endif;?>
+                        <?php endif; ?>
                         <div class="mb-3">
                             <label for="nome" class="form-label">Nome:</label>
                             <input type="text" class="form-control" id="nome" name="nome" placeholder="Ex: Maria" value="<?= htmlspecialchars($participanteEditar['nome'] ?? '')  ?>" required>
@@ -122,7 +184,7 @@ if (isset($_GET['atualizar'])) {
 
                         <div class="mb-3">
                             <label for="telefone" class="form-label">Telefone:</label>
-                            <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="Ex: (31)99999999" value="<?=htmlspecialchars($participanteEditar['telefone'] ?? '') ?>" required>
+                            <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="Ex: (31)99999999" value="<?= htmlspecialchars($participanteEditar['telefone'] ?? '') ?>" required>
                         </div>
 
                         <div class="text-center">
@@ -153,7 +215,7 @@ if (isset($_GET['atualizar'])) {
                     </thead>
 
                     <tbody>
-                       
+
                         <?php foreach ($participantes as $participante): ?>
                             <tr>
                                 <td><?= $participante['nome'] ?></td>
@@ -177,7 +239,7 @@ if (isset($_GET['atualizar'])) {
 
 
     <footer>Festival Experiência Viva</footer>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js"></script>
 </body>
 

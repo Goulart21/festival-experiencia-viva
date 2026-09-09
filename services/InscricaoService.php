@@ -14,7 +14,7 @@ class InscricaoService
         $this->pdo = $pdo;
     }
 
-    public function cadastrarInscricao(Inscricao $inscricao): bool
+    public function cadastrarInscricao(Inscricao $inscricao): string
     {
 
 
@@ -32,7 +32,7 @@ class InscricaoService
         ]);
 
         if ($stmt->fetchColumn() > 0) {
-            return false;
+            return 'DUPLICADA';
         }
 
 
@@ -49,7 +49,7 @@ class InscricaoService
         $capacidade = $stmt->fetchColumn();
 
         if ($capacidade === false) {
-            return false;
+            return 'ATIVIDADE_NAO_ENCONTRADA';
         }
 
 
@@ -68,7 +68,7 @@ class InscricaoService
 
 
         if ($quantidadeInscritos >= $capacidade) {
-            return false;
+            return 'LOTADA';
         }
 
         // Realiza a inscrição
@@ -79,10 +79,14 @@ class InscricaoService
 
         $stmt = $this->pdo->prepare($sql);
 
-        return $stmt->execute([
+        if ($stmt->execute([
             ':id_participante' => $inscricao->getIdParticipante(),
             ':id_atividade' => $inscricao->getIdAtividade()
-        ]);
+        ])) {
+            return 'SUCESSO';
+        }
+
+        return 'ERRO';
     }
 
 

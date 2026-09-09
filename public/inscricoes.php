@@ -27,9 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_atividade
     );
 
-    $inscricoesService->cadastrarInscricao($inscricao);
+  
 
-    header('Location: inscricoes.php');
+    $resultado = $inscricoesService->cadastrarInscricao($inscricao);
+
+    header('Location: inscricoes.php?mensagem=' . $resultado);
     exit;
 }
 
@@ -95,6 +97,63 @@ if (isset($_GET['cancelar'])) {
 
     <main>
 
+
+        <?php if (isset($_GET['mensagem'])): ?>
+
+            <?php if ($_GET['mensagem'] === 'SUCESSO'): ?>
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Inscrição realizada com sucesso!
+                    <button type="button"
+                        class="btn btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Fechar"></button>
+                </div>
+
+            <?php elseif ($_GET['mensagem'] === 'DUPLICADA'): ?>
+
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    Este participante já está inscrito nesta atividade.
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Fechar"></button>
+                </div>
+
+            <?php elseif ($_GET['mensagem'] === 'LOTADA'): ?>
+
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    A atividade selecionada está lotada.
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Fechar"></button>
+                </div>
+
+            <?php elseif ($_GET['mensagem'] === 'ATIVIDADE_NAO_ENCONTRADA'): ?>
+
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    A atividade selecionada não foi encontrada.
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Fechar"></button>
+                </div>
+
+            <?php elseif ($_GET['mensagem'] === 'ERRO'): ?>
+
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    Ocorreu um erro ao realizar a inscrição.
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Fechar"></button>
+                </div>
+
+            <?php endif; ?>
+
+        <?php endif; ?>
+
         <section class="mb-4 mt-4">
             <h2 class="text-center">Cadastro de Inscrições</h2>
 
@@ -118,7 +177,7 @@ if (isset($_GET['cancelar'])) {
                                         <?= htmlspecialchars($participante['nome']) ?>
                                     </option>
 
-                                    <?php endforeach; ?>
+                                <?php endforeach; ?>
                             </select>
                         </div>
 
@@ -136,7 +195,7 @@ if (isset($_GET['cancelar'])) {
                                         <?= htmlspecialchars($atividade['nome_atividade']) ?>
                                     </option>
 
-                                    <?php endforeach;?>
+                                <?php endforeach; ?>
 
                             </select>
                         </div>
@@ -168,30 +227,30 @@ if (isset($_GET['cancelar'])) {
                     </thead>
 
                     <tbody>
-                        
-                    <?php foreach ($inscricoes as $inscricao):?>
-                    <tr>
-                        <td><?= htmlspecialchars($inscricao['nome_participante']) ?></td>
-                        <td><?= htmlspecialchars($inscricao['nome_atividade']) ?></td>
-                        <td><?= $inscricao['data_inscricao'] ?></td>
-                        <td><?= $inscricao['status'] ?></td>
 
-                        <td>
+                        <?php foreach ($inscricoes as $inscricao): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($inscricao['nome_participante']) ?></td>
+                                <td><?= htmlspecialchars($inscricao['nome_atividade']) ?></td>
+                                <td><?= $inscricao['data_inscricao'] ?></td>
+                                <td><?= $inscricao['status'] ?></td>
 
-                        <?php if($inscricao['status'] === 'ATIVA'): ?>
+                                <td>
 
-                            <a href="inscricoes.php?cancelar=<?= $inscricao['id_inscricao'] ?>"
-                            class="btn btn-danger" onclick="return confirm('Deseja realmente cancelar está inscrição')">Cancelar</a>
+                                    <?php if ($inscricao['status'] === 'ATIVA'): ?>
 
-                            <?php else:?>
-                                <span class="text-muted">Cancelada</span>
-                        </td>
+                                        <a href="inscricoes.php?cancelar=<?= $inscricao['id_inscricao'] ?>"
+                                            class="btn btn-danger" onclick="return confirm('Deseja realmente cancelar está inscrição')">Cancelar</a>
 
-                        <?php endif;?>
-                    </tr>
+                                    <?php else: ?>
+                                        <span class="text-muted">Cancelada</span>
+                                </td>
+
+                            <?php endif; ?>
+                            </tr>
                     </tbody>
 
-                    <?php endforeach;?>
+                <?php endforeach; ?>
                 </table>
             </div>
         </section>
@@ -201,7 +260,8 @@ if (isset($_GET['cancelar'])) {
         Festival Experiência Viva
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+   
 </body>
 
 </html>

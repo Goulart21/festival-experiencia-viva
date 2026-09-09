@@ -15,7 +15,7 @@ class AtividadeService
         $this->pdo = $pdo;
     }
 
-    public function cadastrarAtividade(Atividade $atividade): bool
+    public function cadastrarAtividade(Atividade $atividade): string
     {
         $sql = "INSERT INTO atividades
             (nome_atividade, descricao, data_atividade, hora_inicio, hora_fim, local_atividade, capacidade)
@@ -24,7 +24,7 @@ class AtividadeService
 
         $stmt = $this->pdo->prepare($sql);
 
-        return $stmt->execute([
+        if ($stmt->execute([
             ':nome_atividade' => $atividade->getNomeAtividade(),
             ':descricao' => $atividade->getDescricao(),
             ':data_atividade' => $atividade->getDataAtividade(),
@@ -32,7 +32,10 @@ class AtividadeService
             ':hora_fim' => $atividade->getHoraFim(),
             ':local_atividade' => $atividade->getLocalAtividade(),
             ':capacidade' => $atividade->getCapacidade()
-        ]);
+        ])) {
+            return 'SUCESSO';
+        }
+        return 'ERRO';
     }
     public function listarAtividade(): array
     {
@@ -60,8 +63,9 @@ class AtividadeService
         return $atividade ?: null;
     }
 
-    public function atualizarAtividade(int $id_atividade, Atividade $atividade): bool{
-        
+    public function atualizarAtividade(int $id_atividade, Atividade $atividade): string
+    {
+
         $sql = "UPDATE atividades
         SET nome_atividade = :nome_atividade,
         descricao = :descricao,
@@ -74,9 +78,9 @@ class AtividadeService
 
         $stmt = $this->pdo->prepare($sql);
 
-        
 
-        return $stmt->execute([
+
+        if ($stmt->execute([
             ':nome_atividade' => $atividade->getNomeAtividade(),
             ':descricao' => $atividade->getDescricao(),
             ':data_atividade' => $atividade->getDataAtividade(),
@@ -85,11 +89,14 @@ class AtividadeService
             ':local_atividade' => $atividade->getLocalAtividade(),
             ':capacidade' => $atividade->getCapacidade(),
             ':id' => $id_atividade
-        ]);
-
+        ])) {
+            return 'ATUALIZADO';
+        }
+        return 'ERRO';
     }
 
-    public function excluir(int $id_atividade): bool{
+    public function excluir(int $id_atividade): string
+    {
 
         $sql = "SELECT COUNT(*)
         FROM inscricoes
@@ -103,18 +110,21 @@ class AtividadeService
 
         $quantidade = $stmt->fetchColumn();
 
-        if($quantidade > 0){
-            return false;
+        if ($quantidade > 0) {
+            return 'POSSUI_INSCRICOES';
         }
 
         $sql = "DELETE FROM atividades
                 WHERE id_atividade = :id";
-        
+
         $stmt = $this->pdo->prepare($sql);
 
-        return $stmt->execute([
+         if($stmt->execute([
             ':id' => $id_atividade
-        ]);
+        ])) {
+            return 'EXCLUIDO';
+        }
+        return 'ERRO';  
     }
 }
 
