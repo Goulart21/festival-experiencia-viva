@@ -1,284 +1,420 @@
-🎪 Festival Experiência Viva
+# 🎪 Festival Experiência Viva
 
-Sistema web desenvolvido para o Projeto-Teste do Festival Experiência Viva, com o objetivo de auxiliar na organização e gerenciamento das inscrições dos participantes nas atividades do evento.
+<p align="center">
+  <strong>Sistema Web para Gerenciamento de Participantes, Atividades e Inscrições</strong>
+</p>
 
-O Festival Experiência Viva é um evento de três dias voltado para áreas como hospitalidade, gastronomia, beleza, bem-estar e inovação, contando com palestras, oficinas, demonstrações e experiências.
+<p align="center">
+  Projeto desenvolvido para o Projeto-Teste do <strong>Festival Experiência Viva</strong>
+</p>
 
-Este projeto foi desenvolvido seguindo os requisitos definidos no edital, priorizando organização, integridade dos dados e aplicação de boas práticas de desenvolvimento web.
+<p align="center">
+  <img src="https://img.shields.io/badge/PHP-8.x-777BB4?style=for-the-badge&logo=php&logoColor=white">
+  <img src="https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+  <img src="https://img.shields.io/badge/JavaScript-ES6-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+  <img src="https://img.shields.io/badge/Bootstrap-5-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+  <img src="https://img.shields.io/badge/Git-GitHub-F05032?style=for-the-badge&logo=git&logoColor=white">
+</p>
 
-📌 Sobre o Projeto
+---
 
-O sistema permite realizar o gerenciamento das principais informações relacionadas aos participantes, atividades e inscrições do festival.
+## 📖 Sobre o Projeto
 
-A aplicação foi estruturada utilizando Programação Orientada a Objetos (POO), PDO para comunicação com o banco de dados e uma separação entre modelos, serviços e camada pública da aplicação.
+O **Festival Experiência Viva** é um sistema web desenvolvido para auxiliar na organização das atividades e inscrições de participantes do evento.
 
-Principais funcionalidades
-👤 Cadastro de participantes
-✏️ Atualização de participantes
-🗑️ Exclusão de participantes
-📋 Listagem de participantes
-🎯 Cadastro de atividades
-✏️ Atualização de atividades
-🗑️ Exclusão de atividades respeitando as regras do sistema
-📝 Inscrição de participantes em atividades
-❌ Cancelamento de inscrições
-🚫 Prevenção de inscrições duplicadas
-👥 Controle de capacidade das atividades
-🔐 Validação e integridade dos dados
-🗄️ Persistência dos dados em banco de dados MySQL
-🧩 Regras de Negócio
+O festival possui duração de **três dias** e reúne experiências relacionadas a:
 
-O sistema possui regras para garantir a consistência das inscrições e das atividades.
+* 🍽️ Gastronomia
+* 🏨 Hospitalidade
+* 💆 Beleza
+* 🧘 Bem-estar
+* 💡 Inovação
 
-Participantes
-Cada participante possui um identificador único.
-O e-mail do participante deve ser único.
-Um participante pode realizar inscrições em várias atividades.
-A exclusão de um participante remove apenas suas respectivas inscrições.
-Atividades
-Cada atividade possui uma capacidade máxima de participantes.
-Uma atividade que já possui inscrições não pode ser excluída.
-As informações da atividade podem ser atualizadas conforme as regras definidas pelo sistema.
-Inscrições
-Um participante não pode possuir duas inscrições ativas para a mesma atividade.
-A quantidade de inscrições ativas não pode ultrapassar a capacidade da atividade.
-Uma inscrição pode ser cancelada.
-O cancelamento de uma inscrição libera a vaga correspondente.
-O relacionamento entre participante e atividade é controlado pelo banco de dados.
-🛠️ Tecnologias Utilizadas
-Backend
-PHP
-Programação Orientada a Objetos (POO)
-PDO
-MySQL
-Frontend
-HTML5
-CSS3
-JavaScript
-Bootstrap
-Ferramentas
-Git
-GitHub
-XAMPP
-Visual Studio Code
-🏗️ Arquitetura do Projeto
+O sistema foi desenvolvido seguindo os requisitos estabelecidos no **edital do Projeto-Teste**, utilizando uma estrutura baseada em **Programação Orientada a Objetos**, separação de responsabilidades e banco de dados relacional.
 
-O projeto utiliza uma organização baseada na separação de responsabilidades entre modelos, serviços, configuração e camada pública.
+---
 
+## ✨ Funcionalidades
+
+### 👥 Participantes
+
+* [x] Cadastro de participantes
+* [x] Listagem de participantes
+* [x] Atualização de dados
+* [x] Exclusão de participantes
+* [x] Validação de e-mail único
+* [x] Controle de inscrições relacionadas
+
+### 🎯 Atividades
+
+* [x] Cadastro de atividades
+* [x] Listagem de atividades
+* [x] Atualização de atividades
+* [x] Controle de capacidade
+* [x] Validação das regras de negócio
+* [x] Restrição de exclusão quando existem inscrições
+
+### 📝 Inscrições
+
+* [x] Inscrição em atividades
+* [x] Controle de vagas disponíveis
+* [x] Prevenção de inscrições duplicadas
+* [x] Cancelamento de inscrição
+* [x] Liberação de vaga após cancelamento
+* [x] Integridade entre participantes, atividades e inscrições
+
+---
+
+## 🧠 Regras de Negócio
+
+O sistema possui regras para garantir que os dados permaneçam consistentes durante a utilização.
+
+| Regra           | Descrição                                                                  |
+| --------------- | -------------------------------------------------------------------------- |
+| 👤 Participante | Cada participante possui um identificador único                            |
+| 📧 E-mail       | Não podem existir e-mails duplicados                                       |
+| 🎯 Capacidade   | Uma atividade não pode ultrapassar sua capacidade máxima                   |
+| 📝 Inscrição    | Um participante não pode possuir duas inscrições ativas na mesma atividade |
+| ❌ Cancelamento  | O cancelamento libera a vaga da atividade                                  |
+| 🗑️ Exclusão    | Atividades com inscrições não podem ser excluídas                          |
+| 🔗 Integridade  | Relacionamentos são protegidos por chaves estrangeiras                     |
+
+---
+
+## 🛠️ Tecnologias
+
+### Backend
+
+<p>
+  <img src="https://img.shields.io/badge/PHP-8.x-777BB4?style=flat-square&logo=php&logoColor=white">
+  <img src="https://img.shields.io/badge/POO-Programação%20Orientada%20a%20Objetos-555555?style=flat-square">
+  <img src="https://img.shields.io/badge/PDO-Database%20Access-777BB4?style=flat-square">
+</p>
+
+### Frontend
+
+<p>
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white">
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white">
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black">
+  <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat-square&logo=bootstrap&logoColor=white">
+</p>
+
+### Banco de Dados
+
+<p>
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white">
+</p>
+
+### Ferramentas
+
+<p>
+  <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white">
+  <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white">
+  <img src="https://img.shields.io/badge/XAMPP-FB7A24?style=flat-square&logo=xampp&logoColor=white">
+  <img src="https://img.shields.io/badge/VS%20Code-007ACC?style=flat-square&logo=visual-studio-code&logoColor=white">
+</p>
+
+---
+
+## 🏗️ Arquitetura
+
+O projeto utiliza uma estrutura organizada para separar responsabilidades entre **modelos, serviços, configuração e interface pública**.
+
+```text
 festival-experiencia-viva/
 │
-├── banco/
+├── 📁 banco/
 │   └── festival_experiencia_viva.sql
 │
-├── config/
+├── 📁 config/
 │   └── config.php
 │
-├── models/
+├── 📁 models/
 │   ├── Atividade.php
 │   ├── Inscricao.php
 │   └── Participantes.php
 │
-├── services/
+├── 📁 services/
 │   ├── AtividadeService.php
 │   ├── InscricaoService.php
 │   └── ParticipanteService.php
 │
-├── public/
+├── 📁 public/
 │   ├── index.php
 │   ├── atividades.php
 │   ├── inscricoes.php
 │   ├── participantes.php
 │   │
-│   ├── css/
+│   ├── 📁 css/
 │   │   └── style.css
 │   │
-│   └── js/
+│   └── 📁 js/
 │       └── scipt.js
 │
-├── testes/
-│   ├── teste*.php
-│   └── ...
+├── 📁 testes/
+│   └── arquivos de teste
 │
 └── README.md
-🗄️ Banco de Dados
+```
 
-O sistema utiliza o banco de dados:
+---
 
+## 🔄 Fluxo do Sistema
+
+```text
+                    ┌─────────────────┐
+                    │   PARTICIPANTE  │
+                    └────────┬────────┘
+                             │
+                             ▼
+                    ┌─────────────────┐
+                    │    ATIVIDADES   │
+                    └────────┬────────┘
+                             │
+                             ▼
+                    ┌─────────────────┐
+                    │ VERIFICA VAGAS  │
+                    └────────┬────────┘
+                             │
+                    ┌────────┴────────┐
+                    ▼                 ▼
+              ┌──────────┐      ┌──────────┐
+              │  VAGA    │      │ SEM VAGA │
+              │ DISPONÍVEL│     │          │
+              └─────┬────┘      └──────────┘
+                    │
+                    ▼
+              ┌──────────┐
+              │ INSCRIÇÃO│
+              │  ATIVA   │
+              └─────┬────┘
+                    │
+                    ▼
+              ┌──────────┐
+              │CANCELAMENTO│
+              └─────┬────┘
+                    │
+                    ▼
+              ┌──────────┐
+              │ VAGA     │
+              │ LIBERADA │
+              └──────────┘
+```
+
+---
+
+## 🗄️ Banco de Dados
+
+O banco utilizado pelo sistema é:
+
+```text
 festival_experiencia_viva
+```
 
-A estrutura foi desenvolvida considerando integridade e normalização dos dados.
+A estrutura utiliza relacionamentos entre as entidades:
 
-O relacionamento entre participantes, atividades e inscrições permite que:
+```text
+┌──────────────────┐
+│   PARTICIPANTES  │
+├──────────────────┤
+│ id_participante  │
+│ nome             │
+│ email            │
+│ telefone         │
+└────────┬─────────┘
+         │
+         │ 1:N
+         ▼
+┌──────────────────┐
+│    INSCRICOES    │
+├──────────────────┤
+│ id_inscricao     │
+│ id_participante  │
+│ id_atividade     │
+│ status           │
+└────────┬─────────┘
+         │
+         │ N:1
+         ▼
+┌──────────────────┐
+│    ATIVIDADES    │
+├──────────────────┤
+│ id_atividade     │
+│ nome_atividade   │
+│ descricao        │
+│ data_atividade   │
+│ hora_inicio      │
+│ hora_fim         │
+│ local            │
+│ capacidade       │
+└──────────────────┘
+```
 
-PARTICIPANTES
-      │
-      │
-      ▼
- INSCRIÇÕES
-      │
-      │
-      ▼
- ATIVIDADES
+### 🔐 Integridade
 
-A tabela de inscrições funciona como relacionamento entre participantes e atividades.
+O banco utiliza recursos como:
 
-Entre as restrições utilizadas estão:
+* `PRIMARY KEY`
+* `FOREIGN KEY`
+* `UNIQUE`
+* Restrições de integridade referencial
+* Relacionamento entre entidades
+* Controle de duplicidade
 
-Chaves primárias
-Chaves estrangeiras
-Campos únicos
-Controle de integridade referencial
-Restrição de inscrições duplicadas
-🔄 Fluxo Principal
+---
 
-O fluxo principal da aplicação pode ser representado da seguinte forma:
+## 💻 Estrutura de Código
 
-┌──────────────────────┐
-│      Participante    │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Visualiza atividades │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Escolhe uma atividade│
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Verifica disponibilidade│
-└──────────┬───────────┘
-           │
-      ┌────┴────┐
-      │         │
-    Vaga      Sem vaga
-      │         │
-      ▼         ▼
-   Inscrição   Recusa
-      │
-      ▼
-┌──────────────────────┐
-│ Inscrição confirmada │
-└──────────────────────┘
-💻 Organização do Código
-models/
+### `models/`
 
-Responsável pelas entidades e operações relacionadas aos dados do sistema.
+Representa as entidades utilizadas pelo sistema.
 
-Exemplos:
-
+```text
 Atividade.php
 Inscricao.php
 Participantes.php
-services/
+```
 
-Responsável pela implementação das regras de negócio.
+### `services/`
 
+Concentra as regras de negócio e operações do sistema.
+
+```text
 AtividadeService.php
 InscricaoService.php
 ParticipanteService.php
+```
 
-Essa separação permite evitar que toda a lógica fique concentrada diretamente nas páginas públicas.
+### `config/`
 
-config/
+Centraliza a configuração da aplicação e conexão com o banco de dados utilizando **PDO**.
 
-Contém as configurações necessárias para conexão e utilização do banco de dados.
+### `public/`
 
-public/
+Contém as páginas utilizadas diretamente pela aplicação.
 
-Contém as páginas acessíveis pela aplicação e os arquivos responsáveis pela interface.
+### `testes/`
 
-testes/
+Contém arquivos utilizados para validar o comportamento das funcionalidades.
 
-Contém arquivos utilizados para validar o funcionamento das funcionalidades implementadas.
+---
 
-▶️ Como Executar o Projeto
-1. Pré-requisitos
+## 🚀 Como Executar
 
-Antes de executar o projeto, tenha instalado:
+### 1️⃣ Clone o repositório
 
-XAMPP
-PHP
-MySQL
-Navegador web
-2. Clonar o repositório
+```bash
 git clone https://github.com/Goulart21/festival-experiencia-viva.git
-3. Colocar o projeto no XAMPP
+```
 
-Mova o projeto para:
+### 2️⃣ Acesse a pasta
 
+```bash
+cd festival-experiencia-viva
+```
+
+### 3️⃣ Configure o XAMPP
+
+Coloque o projeto dentro de:
+
+```text
 C:\xampp\htdocs\
+```
 
-A estrutura deverá ficar semelhante a:
+Inicie no XAMPP:
 
-C:\xampp\htdocs\festival-experiencia-viva
-4. Criar o banco de dados
-
-Abra o phpMyAdmin e importe o arquivo:
-
-banco/festival_experiencia_viva.sql
-
-O banco utilizado pela aplicação será:
-
-festival_experiencia_viva
-5. Configurar a conexão
-
-Verifique as configurações do arquivo:
-
-config/config.php
-
-Confirme os dados de conexão com o MySQL de acordo com o ambiente local.
-
-6. Iniciar o XAMPP
-
-Ative:
-
+```text
 Apache
 MySQL
+```
 
-Depois, acesse o projeto pelo navegador através do servidor local.
+### 4️⃣ Configure o banco
 
-🧪 Testes
+Abra o **phpMyAdmin** e importe:
 
-O projeto possui uma pasta específica para testes das funcionalidades:
+```text
+banco/festival_experiencia_viva.sql
+```
 
-testes/
+### 5️⃣ Configure a conexão
 
-Foram realizadas validações envolvendo operações como:
+Verifique as credenciais do banco em:
 
-Cadastro de participantes
-Atualização de participantes
-Exclusão de participantes
-Cadastro de atividades
-Inscrição em atividades
-Prevenção de inscrições duplicadas
-Cancelamento de inscrições
-Controle de vagas disponíveis
-📚 Objetivo Acadêmico
+```text
+config/config.php
+```
 
-O projeto foi desenvolvido como parte do Projeto-Teste do Festival Experiência Viva, tendo como foco a aplicação prática de conceitos de desenvolvimento web e engenharia de software.
+### 6️⃣ Execute
 
-Durante o desenvolvimento foram aplicados conceitos como:
+Após iniciar o Apache e o MySQL, acesse o projeto através do servidor local.
 
-Programação Orientada a Objetos
-Arquitetura em camadas
-Modelagem de banco de dados
-Relacionamentos entre entidades
-Integridade referencial
-Operações CRUD
-PDO e consultas parametrizadas
-Regras de negócio
-Controle de versão com Git
-Desenvolvimento colaborativo utilizando GitHub
-👨‍💻 Desenvolvedor
+---
 
-Pedro Teodoro Goulart Santana
+## 🧪 Testes
 
-Desenvolvimento Web • PHP • JavaScript • MySQL • POO
+As principais funcionalidades foram testadas durante o desenvolvimento, incluindo:
 
-📄 Licença
+```text
+✓ Cadastro de participante
+✓ Atualização de participante
+✓ Exclusão de participante
+✓ Cadastro de atividade
+✓ Atualização de atividade
+✓ Inscrição em atividade
+✓ Prevenção de inscrição duplicada
+✓ Cancelamento de inscrição
+✓ Controle de capacidade
+✓ Liberação de vaga
+✓ Integridade dos relacionamentos
+```
 
-Este projeto foi desenvolvido para fins acadêmicos, como parte do Projeto-Teste do Festival Experiência Viva.
+---
+
+## 📚 Conceitos Aplicados
+
+Este projeto possibilitou a aplicação prática de conceitos importantes de desenvolvimento de software:
+
+* 🧱 Programação Orientada a Objetos
+* 🏛️ Separação de responsabilidades
+* 🗃️ Modelagem de banco de dados
+* 🔗 Relacionamentos entre entidades
+* 🔐 Integridade referencial
+* ♻️ Operações CRUD
+* 🛡️ Consultas parametrizadas com PDO
+* 📋 Regras de negócio
+* 🧪 Testes funcionais
+* 🌿 Git e GitHub
+* 🔀 Branches e Pull Requests
+
+---
+
+## 🎓 Contexto Acadêmico
+
+Projeto desenvolvido como parte do **Projeto-Teste do Festival Experiência Viva**, com foco no desenvolvimento de uma aplicação web para gerenciamento das inscrições dos participantes nas atividades do evento.
+
+O desenvolvimento buscou aplicar conceitos de **desenvolvimento web, banco de dados, programação orientada a objetos e controle de versão**, seguindo os requisitos estabelecidos no edital.
+
+---
+
+## 👨‍💻 Desenvolvedor
+
+<p align="center">
+  <strong>Pedro Teodoro Goulart Santana</strong>
+</p>
+
+<p align="center">
+  Desenvolvimento Web • PHP • JavaScript • MySQL • POO
+</p>
+
+<p align="center">
+  <a href="https://github.com/Goulart21">
+    <img src="https://img.shields.io/badge/GitHub-Goulart21-181717?style=for-the-badge&logo=github">
+  </a>
+</p>
+
+---
+
+<p align="center">
+  ⭐ Se este projeto foi útil ou interessante, considere deixar uma estrela no repositório!
+</p>
