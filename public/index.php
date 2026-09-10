@@ -1,3 +1,37 @@
+<?php
+
+require_once __DIR__ . '/../config/config.php';
+
+$totalParticipantes = $pdo->query(
+    "SELECT COUNT(*) FROM participantes"
+)->fetchColumn();
+
+$totalAtividades = $pdo->query(
+    "SELECT COUNT(*) FROM atividades"
+)->fetchColumn();
+
+$totalInscricoes = $pdo->query(
+    "SELECT COUNT(*) FROM inscricoes WHERE status = 'ATIVA'"
+)->fetchColumn();
+
+$ocupacaoAtividades = $pdo->query(
+    "SELECT
+        a.nome_atividade,
+        a.capacidade,
+        COUNT(i.id_inscricao) AS inscritos
+     FROM atividades a
+     LEFT JOIN inscricoes i
+        ON a.id_atividade = i.id_atividade
+        AND i.status = 'ATIVA'
+     GROUP BY
+        a.id_atividade,
+        a.nome_atividade,
+        a.capacidade
+     ORDER BY a.nome_atividade"
+)->fetchAll();
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -70,9 +104,12 @@
                                 Participantes
                             </h2>
 
+                            <p class="display-6 fw-bold">
+                                <?= $totalParticipantes ?>
+                            </p>
+
                             <p class="card-text">
-                                Cadastre, consulte, atualize e gerencie
-                                os participantes do festival.
+                                Participantes cadastrados
                             </p>
 
                             <a href="participantes.php"><button class="btn btn-dark">Gerenciar
@@ -94,9 +131,12 @@
                                 Atividades
                             </h2>
 
+                            <p class="display-6 fw-bold">
+                                <?= $totalAtividades ?>
+                            </p>
+
                             <p class="card-text">
-                                Organize e crie as atividades, horários,
-                                locais e capacidade.
+                                Atividades cadastradas
                             </p>
 
                             <a href="atividades.php"><button class="btn btn-dark">Gerenciar Atividades</button></a>
@@ -118,10 +158,13 @@
                                 Inscrições
                             </h2>
 
-                            <p class="card-text">
-                                Realize as inscrições dos participantes e as acompanhe
+                            <p class="display-6 fw-bold">
+                                <?= $totalInscricoes ?>
                             </p>
 
+                            <p class="card-text">
+                                Inscrições ativas
+                            </p>
                             <a href="inscricoes.php"><button class="btn btn-dark">Gerenciar Inscrições</button></a>
                         </div>
 
@@ -132,17 +175,69 @@
             </div>
 
         </section>
+
+        <section class="container pb-5">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h4 mb-4">Ocupação das atividades</h2>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Atividade</th>
+                                    <th>Inscritos</th>
+                                    <th>Capacidade</th>
+                                    <th>Ocupação</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php foreach ($ocupacaoAtividades as $atividade): ?>
+
+                                    <?php
+                                    $percentual = $atividade['capacidade'] > 0
+                                        ? ($atividade['inscritos'] / $atividade['capacidade']) * 100
+                                        : 0;
+                                    ?>
+
+                                    <tr>
+                                        <td>
+                                            <?= htmlspecialchars($atividade['nome_atividade']) ?>
+                                        </td>
+
+                                        <td>
+                                            <?= $atividade['inscritos'] ?>
+                                        </td>
+
+                                        <td>
+                                            <?= $atividade['capacidade'] ?>
+                                        </td>
+
+                                        <td>
+                                            <?= number_format($percentual, 0) ?>%
+                                        </td>
+                                    </tr>
+
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
 
     <footer>
 
-            Festival Experiência Viva
-            
+        Festival Experiência Viva
+
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
     </script>
 
 </body>
+
 </html>
